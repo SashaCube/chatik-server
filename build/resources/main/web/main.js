@@ -73,16 +73,20 @@ function write(message){
  * Function in charge of sending the 'commandInput' text to the server via the socket.
  */
 function onSend() {
+    console.log("onSend")
     var input = document.getElementById("commandInput");
 
     // Validate that the input exists
     if(input) {
+        console.log("input true")
         var text = input.value;
 
         if(text && socket) {
             socket.send(text);
             input.value = "";
         }
+    } else {
+        console.log("input false")
     }
 }
 
@@ -92,7 +96,9 @@ function onSend() {
 function start(){
     connect();
 
-    document.getElementById("sendButton").onClick = onSend;
+    document.getElementById("sendButton").onclick = function() {
+        onSend();
+    }
     // If we pressed the 'enter' key being inside the 'commandInput',
     // send the message to improve accessibility and making it nicer.
     document.getElementById("commandInput").onkeydown = function(e) {
