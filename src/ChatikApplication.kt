@@ -1,21 +1,13 @@
 package com.chatik.server
 
-import io.ktor.application.Application
-import io.ktor.application.ApplicationCallPipeline
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.features.CallLogging
-import io.ktor.features.DefaultHeaders
+import io.ktor.application.*
+import io.ktor.features.*
 import io.ktor.http.cio.websocket.*
-import io.ktor.http.content.defaultResource
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
-import io.ktor.routing.routing
+import io.ktor.http.content.*
+import io.ktor.routing.*
 import io.ktor.sessions.*
-import io.ktor.util.KtorExperimentalAPI
-import io.ktor.util.generateNonce
-import io.ktor.websocket.WebSockets
-import io.ktor.websocket.webSocket
+import io.ktor.util.*
+import io.ktor.websocket.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.consumeEach
 import java.time.Duration
@@ -115,7 +107,7 @@ class ChatikApplication {
                 val newName = command.removePrefix("/user").trim()
 
                 when {
-                    newName.isBlank() -> server.sendTo(id, "server::help", "/user [newName]")
+                    newName.isBlank() -> server.sendTo(id, "server::help", "/user [$newName]")
                     newName.length > 50 -> server.sendTo(
                         id,
                         "server::help",
